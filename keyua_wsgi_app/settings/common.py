@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = True if os.getenv('DEBUG', 'true') == 'true' else False
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
