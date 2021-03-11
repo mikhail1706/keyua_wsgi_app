@@ -5,7 +5,7 @@ from .models import City
 
 class CityAdmin(admin.ModelAdmin):
     fields = ('city', 'temperature', 'users')
-    # readonly_fields = ('users', )
+    readonly_fields = ('users', )
     list_display = ('city', 'temperature')
 
 

@@ -56,7 +56,7 @@
                         wsStart = 'wss://';
                     }
 
-                    this.dashBoardSocket = new WebSocket(`ws://${this.asgiAppUrl}/ws/update/city/{{ user.id }}/`);
+                    this.dashBoardSocket = new WebSocket(`${this.asgiAppUrl}/ws/update/city/{{ user.id }}/`);
 
                     this.dashBoardSocket.onopen = (e) => {
                         console.log('open')

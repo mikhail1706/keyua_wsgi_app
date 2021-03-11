@@ -27,7 +27,6 @@ pip install --upgrade pip
 pip install -r requirements.txt
 python3 manage.py makemigrations
 python3 manage.py migrate
-python manage.py runserver
 ````
 
 - Also install RabbitMQ server for celery:
@@ -54,7 +53,7 @@ celery -A keyua1_1 worker --beat -l INFO
 ``
 sh local_celerybeat.sh
 ``
-- Redis setup
-``sudo apt install redis-server``
+
+- Run server
+``python manage.py runserver ``
   
-### define additional settings in .env
