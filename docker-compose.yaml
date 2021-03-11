@@ -30,7 +30,7 @@ services:
       - db_data:/var/lib/mysql
     restart: always
     environment:
-      MYSQL_DATABASE: keyua_wsgi_app_db
+      MYSQL_DATABASE: keyua_wsgi_db
       MYSQL_USER: admin
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password

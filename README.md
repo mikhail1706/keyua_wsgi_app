@@ -1,4 +1,4 @@
-Tasks for KeyUA
+KeyUA WSGI Application
 
 ## Production 
 - set production configuration in .env file
