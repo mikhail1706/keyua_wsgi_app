@@ -57,3 +57,7 @@ sh local_celerybeat.sh
 - Run server
 ``python manage.py runserver ``
   
+- Add cities by django [admin](http://localhost:8000/admin)
+- Social auth available only by 'localhost' not '127.0.0.1'
+
+  
