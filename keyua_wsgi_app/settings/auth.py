@@ -1,6 +1,6 @@
 import os
 
-SECRET_KEY = '7a*_tv+x(yhj1&^40hv4#u7i#xz-mtxp7o$q7o)-#!d%5p8ugk'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', '*')]
 
