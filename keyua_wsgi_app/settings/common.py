@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', False)
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ROOT_URLCONF = 'keyua_wsgi_app.urls'
@@ -40,11 +41,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticroot')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
-)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

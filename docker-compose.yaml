@@ -22,7 +22,7 @@ services:
       - db
     volumes:
       - static:/usr/src/app/keyua_wsgi_app/staticroot
-      - mediaroot:/usr/src/app/keyua1_1/media
+      - mediaroot:/usr/src/app/keyua_wsgi_app/media
 
   db:
     image: mysql:5.7
