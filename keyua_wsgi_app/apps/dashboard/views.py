@@ -18,7 +18,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         return ctx
 
 
-class YourCitiesAjaxView(View):
+class YourCitiesAjaxView(LoginRequiredMixin, View):
     def get(self, request):
         res = list(request.user.cities.values('id', 'city', 'temperature'))
         return JsonResponse(res, safe=False)

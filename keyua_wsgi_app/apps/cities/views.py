@@ -5,14 +5,11 @@ from django.views.generic import TemplateView, View
 from .models import City
 
 
-
-
-
 class CitiesView(LoginRequiredMixin, TemplateView):
     template_name = 'cities.html'
 
 
-class CitiesAjaxView(View):
+class CitiesAjaxView(LoginRequiredMixin, View):
     def get(self, request):
         res = list()
         all_cities = City.objects.all()
@@ -26,7 +23,7 @@ class CitiesAjaxView(View):
         return JsonResponse(res, safe=False)
 
 
-class SubscribeCityView(View):
+class SubscribeCityView(LoginRequiredMixin, View):
     def get(self, request, city_id):
         result = {'success': True, 'msg': 'The city successful subscribed'}
         if request.user.cities.count() == 5:
@@ -37,7 +34,7 @@ class SubscribeCityView(View):
         return JsonResponse(result)
 
 
-class UnSubscribeView(View):
+class UnSubscribeView(LoginRequiredMixin, View):
     def get(self, request, city_id):
         request.user.cities.remove(city_id)
         return JsonResponse({'success': True, 'msg': 'Unsubscribed!'})
