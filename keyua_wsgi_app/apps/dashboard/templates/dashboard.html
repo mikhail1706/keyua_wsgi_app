@@ -38,13 +38,14 @@
 
 {% block js %}
 
- <script>
+    <script>
         var vm = new Vue({
             el: '#app',
             delimiters: ["{[", "]}"],
             data: {
                 cities: [],
                 dashBoardSocket: null,
+                asgiAppUrl: '{{ ASGI_APP_WS_URL }}'
             },
             computed: {},
             methods: {
@@ -55,22 +56,20 @@
                         wsStart = 'wss://';
                     }
 
-                    let dashSocket = new WebSocket('ws://localhost:8000/ws/chat/my_room/');
+                    this.dashBoardSocket = new WebSocket(`ws://${this.asgiAppUrl}/ws/update/city/{{ user.id }}/`);
 
+                    this.dashBoardSocket.onopen = (e) => {
+                        console.log('open')
+                    }
 
-                    {#this.dashBoardSocket.onopen = (e) => {#}
-                    {#    console.log('open')#}
-                    {# }#}
-                    {##}
-                    {#this.dashBoardSocket.onmessage = (e) => {#}
-                    {#    let data = JSON.parse(e.data);#}
-                    {#    console.log(data)#}
-                    {##}
-                    {#    let city = this.cities.find(item => item.id === data.id);#}
-                    {#    if (city){#}
-                    {#        city.temperature = data.temperature;#}
-                    {#    }#}
-                    {# }#}
+                    this.dashBoardSocket.onmessage = (e) => {
+                        let data = JSON.parse(e.data);
+
+                        let city = this.cities.find(item => item.id === data.city_id);
+                        if (city) {
+                            city.temperature = data.temperature;
+                        }
+                    }
 
                     this.dashBoardSocket.onclose = (e) => {
                         console.log('close')

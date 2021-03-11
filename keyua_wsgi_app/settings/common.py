@@ -51,4 +51,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 ASGI_APP_URL = os.getenv('ASGI_APP_URL', 'http://127.0.0.1:8000')
+ASGI_APP_WS_URL = os.getenv('ASGI_APP_WS_URL', 'http://127.0.0.1:8000')
+
 OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
