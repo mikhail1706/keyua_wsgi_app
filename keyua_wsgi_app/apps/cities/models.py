@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from keyua_wsgi_app.apps.tools.websokcets import ApiManager
+from keyua_wsgi_app.apps.tools.managers import ApiManager
 
 
 class City(models.Model):
