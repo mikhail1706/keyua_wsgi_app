@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - static:/staticroot
+    depends_on:
+      - django
+
+  django:
+    build:
+      context: .
+      dockerfile: docker/django/Dockerfile
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - static:/usr/src/app/keyua_wsgi_app/staticroot
+      - mediaroot:/usr/src/app/keyua1_1/media
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: keyua_wsgi_app_db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+
+  celery:
+    build:
+      context: .
+      dockerfile:  docker/scheduler/Dockerfile
+    command: celery -A keyua_wsgi_app worker --beat -l INFO
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+    - 15673:15672
+
+
+volumes:
+  static:
+  mediaroot:
+  db_data:

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+
+{% block content %}
+<div class="col-8 offset-2">
+<div id="app" class="mt-5 ">
+        <div class="text-center mt-5">
+            <h1>List of cities</h1>
+            <h3>Choose the city</h3>
+        </div>
+
+        <div>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>City</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="city in cities">
+                    <th>{[ city.city ]}</th>
+                    <th class="text-center">
+                        <button @click="subscribe(city.id)"
+                                v-if="!city.subscribed"
+                                class="btn btn-primary btn-sm">
+                            Subscribe
+                        </button>
+                        <button v-else-if="city.subscribed"
+                                @click="unSubscribe(city.id)"
+                                class="btn btn-sm btn-danger">Unsubscribe
+                        </button>
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            delimiters: ["{[", "]}"],
+            data: {
+                cities: [],
+            },
+            computed: {},
+            methods: {
+                unSubscribe(id) {
+                    axios.get(`/cities/unsubscribe/${id}/`)
+                        .then(response => {
+                            if (response.data.success) {
+                                iziToast.success({
+                                    timeout: 3000,
+                                    position: 'topLeft',
+                                    message: response.data.msg,
+                                });
+
+                                let city = this.cities.find(item => item.id === id)
+                                city.subscribed = false;
+
+                            } else {
+                                iziToast.error({
+                                    timeout: 3000,
+                                    title: 'Error',
+                                    message: response.data.msg,
+                                });
+                            }
+                        })
+                },
+                subscribe(id) {
+                    axios.get(`/cities/subscribe/${id}/`)
+                        .then(response => {
+                            if (response.data.success) {
+                                iziToast.success({
+                                    timeout: 3000,
+                                    position: 'topLeft',
+                                    message: response.data.msg,
+                                });
+
+                                let city = this.cities.find(item => item.id === id)
+                                city.subscribed = true;
+
+                            } else {
+                                iziToast.error({
+                                    timeout: 3000,
+                                    title: 'Error',
+                                    message: response.data.msg,
+                                });
+                            }
+                        })
+                },
+                getCities() {
+                    axios.get('/cities/ajax/')
+                        .then(response => {
+                            this.cities = response.data;
+                        })
+                }
+            },
+            watch: {},
+            created: function () {
+            },
+            mounted: function () {
+                this.getCities()
+            }
+        });
+    </script>
+
+{% endblock %}

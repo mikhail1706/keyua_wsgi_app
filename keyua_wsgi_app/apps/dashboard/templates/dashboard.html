@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+
+{% block content %}
+
+    <div id="app" class="mt-5 ">
+        <div class="text-center mt-5">
+            <h1>Welcome to dashboard</h1>
+            <h3>There are list of your cities</h3>
+        </div>
+        <div class="row">
+            <div class="col-6 offset-3">
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#id</th>
+                            <th>City</th>
+                            <th>Temperature</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="city in cities">
+                            <th>{[ city.id ]}</th>
+                            <th>{[ city.city ]}</th>
+                            <th>{[ city.temperature ]}</th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+ <script>
+        var vm = new Vue({
+            el: '#app',
+            delimiters: ["{[", "]}"],
+            data: {
+                cities: [],
+                dashBoardSocket: null,
+            },
+            computed: {},
+            methods: {
+                initSocket() {
+                    let loc = window.location;
+                    let wsStart = 'ws://';
+                    if (loc.protocol === 'https:') {
+                        wsStart = 'wss://';
+                    }
+
+                    let dashSocket = new WebSocket('ws://localhost:8000/ws/chat/my_room/');
+
+
+                    {#this.dashBoardSocket.onopen = (e) => {#}
+                    {#    console.log('open')#}
+                    {# }#}
+                    {##}
+                    {#this.dashBoardSocket.onmessage = (e) => {#}
+                    {#    let data = JSON.parse(e.data);#}
+                    {#    console.log(data)#}
+                    {##}
+                    {#    let city = this.cities.find(item => item.id === data.id);#}
+                    {#    if (city){#}
+                    {#        city.temperature = data.temperature;#}
+                    {#    }#}
+                    {# }#}
+
+                    this.dashBoardSocket.onclose = (e) => {
+                        console.log('close')
+                    }
+                },
+                getCities() {
+                    axios.get('/ajax/your_cities/')
+                        .then(response => {
+                            this.cities = response.data;
+                        })
+                }
+            },
+            watch: {},
+            created: function () {
+            },
+            mounted: function () {
+                this.getCities();
+                this.initSocket();
+            }
+        });
+    </script>
+
+{% endblock %}

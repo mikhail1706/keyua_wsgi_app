@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} ReadMe {% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="d-flex justify-content-center" style="height: 100vh">
+            <div class="">
+                <div class="text-center mt-3">
+                    <h3>Please login or register to see content</h3>
+                </div>
+                <div id="logreg-forms">
+                    <form class="form-signin" method="post">
+                        {% csrf_token %}
+                        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
+                        <div class="social-login">
+                            <a href="{% url "social:begin" "facebook" %}" class="btn facebook-btn social-btn d-inline"
+                               type="button"><span><i
+                                    class="fab fa-facebook-f"></i> Sign in with Facebook</span></a>
+                            <a href="{% url "social:begin" "google-oauth2" %}"
+                               class="btn google-btn social-btn d-inline" type="button"><span><i
+                                    class="fab fa-google-plus-g"></i> Sign in with Google+</span></a>
+                        </div>
+                        <p style="text-align:center"> OR </p>
+                        <input type="text" id="id_username" name="username" class="form-control" placeholder="Username"
+                               required=""
+                               autofocus="">
+
+                        <input type="password" id="id_password" name="password" class="form-control mt-2"
+                               placeholder="Password"
+                               required="">
+                        {% if form.errors %}
+                            <div class="" role="alert">
+                                <div class="">
+                                    {% for error in form.non_field_errors %}
+                                        <div class="text-danger">{{ error|escape }}</div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <button class="btn btn-success btn-block w-100" type="submit"><i class="fas fa-sign-in-alt"></i>
+                            Sign in
+                        </button>
+                        <hr>
+                        <!-- <p>Don't have an account!</p>  -->
+                        <a href="{% url 'register' %}" class="btn btn-primary btn-block w-100 text-white"
+                           type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</a>
+                    </form>
+                    <br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %} {% endblock %}

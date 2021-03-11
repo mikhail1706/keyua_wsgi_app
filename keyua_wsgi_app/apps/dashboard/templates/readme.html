@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} ReadMe {% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+    <div class="">
+        <h2 class="text-center">ReadMe page</h2>
+        <h4 class="text-center">Please login or register to use app</h4>
+    </div>
+        <div class="text-center">
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+            <a href="{% url 'register' %}" class="btn btn-success">Register</a>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block js %} {% endblock %}

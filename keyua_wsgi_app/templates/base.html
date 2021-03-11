@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sticky-footer-navbar/">
+    <link rel="stylesheet" href="{% static 'components/bootstrap/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'components/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'components/izitoast/css/iziToast.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+
+    <!-- Axios -->
+    <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+        axios.defaults.xsrfCookieName = "csrftoken";
+    </script>
+
+    {% block css %}
+    {% endblock %}
+ <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .h-100vh {
+          height: 100vh;
+      }
+    </style>
+</head>
+ <body class="d-flex flex-column h-100vh">
+
+{% include 'header.html' %}
+
+<!-- Begin page content -->
+<main class="flex-fill">
+  <div class="container">
+    {% block content %} {% endblock %}
+  </div>
+</main>
+
+{% include 'footer.html' %}
+
+ <script src="{% static 'components/izitoast/js/iziToast.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+ {% block js %}
+
+ {% endblock %}
+</body>
+</html>
