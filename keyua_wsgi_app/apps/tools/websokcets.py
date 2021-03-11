@@ -13,7 +13,7 @@ class ApiManager:
         city_id = self.data.get('city_id')
         users = list(User.objects.filter(cities=city_id).values_list('id', flat=True))
         self.data.update({'users': users})
-        requests.post(f'{self.first_app_url}/api/update/city/', self.data)
+        requests.post(f'{self.first_app_url}/api/cities/update/{city_id}/', json=self.data)
 
 
 

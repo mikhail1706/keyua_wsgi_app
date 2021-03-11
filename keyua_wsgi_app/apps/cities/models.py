@@ -20,7 +20,6 @@ class City(models.Model):
 
         ApiManager({
             'city_id': self.id,
-            'city': self.city,
             'temperature': str(self.temperature),
         }).update_cities()
 
